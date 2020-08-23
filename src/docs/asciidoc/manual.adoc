@@ -1,0 +1,64 @@
+= Application User's Manual
+:copyright: Copyright (c) YYYY Myself.
+:version-label: Version:
+:last-update-label: Last Updated:
+:sectnums:
+:doctype: book
+:media: prepress
+:chapter-label:
+:toc:
+:toclevels: 4
+:toc-title: Table of Contents
+
+:description: Application User's Manual
+:keywords: manual myapp
+:imagesdir: ./images
+:experimental:
+
+== Part 1
+
+Some text
+
+=== List example
+
+Some items:
+
+* OS
+** Windows
+** Ubuntu
+* JVM,
+* App server
+* Application with its configuration
+
+Numbered list:
+
+. OS
+.. Windows
+.. Ubuntu
+. JVM,
+. App server
+. Application with its configuration
+
+Inline element inside item:
+
+* Item 1
+* Item 2
++
+image::login.png[Login Screen, heigth=30%]
+* Item 3
+
+This is a line with an
+image:pestania_ingresar.png[pestaña ingresar, heigth=40%]
+image inline.
+
+Showing a menu:
+menu:File[Copy]
+
+Showing a button:
+Press btn:[OK] to start.
+
+== Part NN
+
+More text
+
+Showing keyboard combinations kbd:[Alt+F11]

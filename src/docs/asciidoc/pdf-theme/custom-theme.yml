@@ -1,0 +1,23 @@
+---
+# Custom PDF teme
+# See: https://github.com/asciidoctor/asciidoctor-pdf/blob/master/docs/theming-guide.adoc
+extends: default
+page:
+  size: A4
+footer:
+  recto:
+    right:
+      content: 'Page {page-number} of {page-count}'
+    center:
+      content: '{docdate}'
+    left:
+      content: '{doctitle}'
+  verso:
+    right:
+      content: $footer-recto-left-content
+    center:
+      content: $footer-recto-center-content
+    left:
+      content: $footer-recto-right-content
+
+

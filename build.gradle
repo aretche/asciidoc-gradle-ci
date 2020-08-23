@@ -1,0 +1,95 @@
+
+plugins {
+    id 'org.asciidoctor.jvm.convert' version '3.1.0'
+    id 'org.asciidoctor.jvm.pdf' version '3.1.0'
+}
+
+apply plugin: 'java'
+
+group 'io.github.aretche'
+version '0.0.1'
+
+repositories {
+    mavenCentral()
+}
+
+asciidoctorPdf {
+
+    baseDirFollowsSourceFile()
+
+    // Que solo procese el documento manual.adoc
+    sources {
+        include 'manual.adoc'
+    }
+
+    outputDir "$buildDir/docs/$version"
+
+    logDocuments true
+
+    asciidoctorj {
+        attributes 'build-gradle': file('build.gradle'),
+                'sourcedir': project.sourceSets.main.java.srcDirs[0],
+                'imagesdir': './images',
+                'pdf-stylesdir': './pdf-theme',
+                'pdf-style': 'custom',
+                'toc': 'left',
+                'icons': 'font',
+                'idprefix': '',
+                'idseparator': '-'
+    }
+}
+
+asciidoctor {
+
+    // Genero el PDF
+    dependsOn asciidoctorPdf
+
+    baseDirFollowsSourceFile()
+
+    // Que solo procese el documento manual.adoc
+    sources {
+        include 'manual.adoc'
+    }
+
+    outputDir "$buildDir/docs/$version"
+
+    logDocuments true
+
+    // Genero el HTML
+    attributes 'build-gradle': file('build.gradle'),
+            'sourcedir': project.sourceSets.main.java.srcDirs[0],
+            'imagesdir': './images',
+            'toc': 'left',
+            'icons': 'font',
+            'setanchors': '',
+            'idprefix': '',
+            'idseparator': '-',
+            'docinfo': 'shared'
+}
+
+def browse(path) {
+    def os = org.gradle.internal.os.OperatingSystem.current()
+    if (os.isLinux()) {
+        exec { commandLine 'xdg-open', "$path" }
+    } else if (os.isWindows()) {
+        exec { commandLine 'cmd', '/c', "start $path" }
+    } else if (os.isMacOsX()) {
+        exec { commandLine 'open', "$path" }
+    }
+}
+
+task openHtml {
+    dependsOn asciidoctor
+    doLast {
+        def file = project.file("$buildDir/docs/$version/manual.html")
+        browse file
+    }
+}
+
+task openPdf {
+    dependsOn asciidoctor
+    doLast {
+        def file = project.file("$buildDir/docs/$version/manual.pdf")
+        browse file
+    }
+}
